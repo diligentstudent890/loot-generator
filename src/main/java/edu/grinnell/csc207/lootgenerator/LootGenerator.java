@@ -18,6 +18,9 @@ public class LootGenerator {
     private final List<Affix> prefixes = new ArrayList<>();
     private final List<Affix> suffixes = new ArrayList<>();
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println("This program kills monsters and generates loot!");
         LootGenerator generator = new LootGenerator();
@@ -35,7 +38,12 @@ public class LootGenerator {
         }
     }
 
-    /**
+    /** 
+     * @param monsterFile
+     * @param tcFile
+     * @param armorFile
+     * @param prefixFile
+     * @param suffixFile
      * Load all data files into memory.
      */
     private void loadData(String monsterFile,
@@ -51,6 +59,7 @@ public class LootGenerator {
     }
 
     /**
+     * @param path
      * Simple scanner-based loading—no try-with-resources.
      */
     private void loadMonsters(String path) throws IOException {
@@ -79,7 +88,8 @@ public class LootGenerator {
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             String[] parts = line.split("\t");
-            armorMap.put(parts[0], new Armor(parts[0], Integer.parseInt(parts[1]), Integer.parseInt(parts[2])));
+            armorMap.put(parts[0], new Armor(parts[0], Integer.parseInt(parts[1]),
+                Integer.parseInt(parts[2])));
         }
         sc.close();
     }
@@ -89,7 +99,8 @@ public class LootGenerator {
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
             String[] parts = line.split("\t");
-            list.add(new Affix(parts[0], parts[1], Integer.parseInt(parts[2]), Integer.parseInt(parts[3])));
+            list.add(new Affix(parts[0], parts[1], Integer.parseInt(parts[2]),
+                Integer.parseInt(parts[3])));
         }
         sc.close();
     }
@@ -168,19 +179,34 @@ public class LootGenerator {
     private static class Monster {
         final String name, type; final int level; final String treasureClass;
         Monster(String name, String type, int level, String treasureClass) {
-            this.name = name; this.type = type; this.level = level; this.treasureClass = treasureClass;
+            this.name = name; 
+            this.type = type; 
+            this.level = level; 
+            this.treasureClass = treasureClass;
         }
     }
     private static class TreasureClassEntry { 
         final String tcName; final List<String> drops;
-        TreasureClassEntry(String tcName, List<String> drops) { this.tcName = tcName; this.drops = drops; }
+        TreasureClassEntry(String tcName, List<String> drops) { 
+            this.tcName = tcName; 
+            this.drops = drops; 
+        }
     }
     private static class Armor { 
         final String name; final int minAc, maxAc;
-        Armor(String name, int minAc, int maxAc) { this.name = name; this.minAc = minAc; this.maxAc = maxAc; }
+        Armor(String name, int minAc, int maxAc) { 
+            this.name = name; 
+            this.minAc = minAc; 
+            this.maxAc = maxAc; 
+        }
     }
     private static class Affix { 
         final String name, modCode; final int minVal, maxVal;
-        Affix(String name, String modCode, int minVal, int maxVal) { this.name = name; this.modCode = modCode; this.minVal = minVal; this.maxVal = maxVal; }
+        Affix(String name, String modCode, int minVal, int maxVal) { 
+            this.name = name; 
+            this.modCode = modCode;
+            this.minVal = minVal; 
+            this.maxVal = maxVal; 
+        }
     }
 }
